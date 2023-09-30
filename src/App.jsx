@@ -1,12 +1,10 @@
 import "./App.css";
+import Body from "./Components/Body";
 
 function App() {
   return (
     <>
-      <div>
-        <h2 className="text-5xl">Hello World</h2>
-        <p>We are going to build NETFLIXGPT</p>
-      </div>
+      <Body />
     </>
   );
 }
