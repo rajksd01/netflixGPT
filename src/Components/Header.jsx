@@ -1,17 +1,32 @@
 import { auth } from "../utils/firebase";
 import { signOut } from "firebase/auth";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser, removeUser } from "../utils/userSlice";
 
 function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  // for storing user data and tracking user  and navigate the user
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+        dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+  }, []);
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
+      .then(() => {})
       .catch((error) => {
         console.log(error);
         navigate("/error");
@@ -25,9 +40,9 @@ function Header() {
         alt="logo"
       />
       {/* after signed in logic */}
-    
-        
-       {user && <div className="flex flex-wrap p-4 m-2">
+
+      {user && (
+        <div className="flex flex-wrap p-4 m-2">
           <img
             className="h-12 w-12  "
             src="../../public/profile.png"
@@ -38,8 +53,8 @@ function Header() {
             {" "}
             Sign Out
           </button>
-        </div>}
-      
+        </div>
+      )}
     </div>
   );
 }

@@ -7,12 +7,12 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate, useDispatch } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [isSignInForm, setIsSignInForm] = useState(true);
   // to validate form
   const [errorMessage, setErrorMessage] = useState(null);
@@ -56,8 +56,8 @@ const Login = () => {
               dispatch(
                 addUser({ uid: uid, email: email, displayName: displayName })
               );
+
               console.log(user);
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error);
@@ -68,7 +68,6 @@ const Login = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(`${errorCode}:${errorMessage}`);
-          navigate("/");
         });
     } else {
       // signin Logic
@@ -80,15 +79,15 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+
           console.log(user);
-          navigate("/browse");
+
           // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorCode + ":" + errorMessage);
-          navigate("/");
         });
     }
   };
