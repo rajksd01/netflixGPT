@@ -1,9 +1,10 @@
-
+import Header from "./Header";
 
 function Browse() {
   return (
     <div>
-     Hello World Browse
+      <Header />
+      Hello World Browse
     </div>
   );
 }

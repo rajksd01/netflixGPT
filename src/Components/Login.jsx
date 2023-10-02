@@ -1,8 +1,18 @@
 import { useState, useRef } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/Validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate, useDispatch } from "react-router-dom";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSignInForm, setIsSignInForm] = useState(true);
   // to validate form
   const [errorMessage, setErrorMessage] = useState(null);
@@ -19,9 +29,68 @@ const Login = () => {
   // For handling Sign up/ SignIn
   const handleButtonClick = (e) => {
     e.preventDefault();
+    console.log(fullName);
 
     const check = checkValidData(email.current.value, password.current.value);
     setErrorMessage(check);
+    // either we can return only if we have value of check other than null or we can compare with null and do the signup / signin process.
+    if (check) return;
+    // signup / signin logic here
+    if (!isSignInForm) {
+      // signup logic
+
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          //updated User Profile
+          updateProfile(user, {
+            displayName: fullName.current.value,
+            photoURL: "https://example.com/jane-q-user/profile.jpg",
+          })
+            .then(() => {
+              const { uid, email, displayName } = auth.currentUser;
+              dispatch(
+                addUser({ uid: uid, email: email, displayName: displayName })
+              );
+              console.log(user);
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error);
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(`${errorCode}:${errorMessage}`);
+          navigate("/");
+        });
+    } else {
+      // signin Logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          navigate("/browse");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + ":" + errorMessage);
+          navigate("/");
+        });
+    }
   };
 
   return (
@@ -82,4 +151,3 @@ const Login = () => {
 };
 
 export default Login;
-//1:57:43
