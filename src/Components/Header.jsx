@@ -12,7 +12,7 @@ function Header() {
   const user = useSelector((store) => store.user);
   // for storing user data and tracking user  and navigate the user
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
@@ -22,6 +22,10 @@ function Header() {
         navigate("/");
       }
     });
+    // unsubsribes when component unmounts
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const handleSignOut = () => {
