@@ -39,7 +39,7 @@ function Header() {
   return (
     <div className="absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
       <img
-        className=" w-48"
+        className=" w-44"
         src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
         alt="logo"
       />
@@ -48,14 +48,25 @@ function Header() {
       {user && (
         <div className="flex flex-wrap p-4 m-2">
           <img
-            className="h-12 w-12  "
+            className="h-12 w-12 px-1 "
             src="../../public/profile.png"
             alt="userIcon"
           />
-          <p>{user?.displayName}</p>
-          <button className="text-white bg-red-600" onClick={handleSignOut}>
-            {" "}
-            Sign Out
+
+          <button
+            className="relative px-5 py-3 overflow-hidden font-medium text-gray-600 bg-gray-100 border  rounded-lg shadow-inner group "
+            onClick={handleSignOut}
+          >
+           
+              <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
+              <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
+              <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+              <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+              <span className="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
+              <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
+                Sign Out
+              </span>
+           
           </button>
         </div>
       )}

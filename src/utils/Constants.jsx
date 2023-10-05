@@ -12,4 +12,4 @@ export const nowPlayingMovies_URL =
 
 export const VIDEO = `https://api.themoviedb.org/3/movie/{movie_id}/videos`;
 
-
+export const IMAGECDN = "https://image.tmdb.org/t/p/w200";
