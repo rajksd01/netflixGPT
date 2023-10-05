@@ -9,3 +9,7 @@ export const API_OPTIONS = {
 
 export const nowPlayingMovies_URL =
   "https://api.themoviedb.org/3/movie/now_playing?page=1";
+
+export const VIDEO = `https://api.themoviedb.org/3/movie/{movie_id}/videos`;
+
+

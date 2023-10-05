@@ -6,7 +6,7 @@ import SecondaryContainer from "./SecondaryContainer";
 function Browse() {
   useNowPlayingMovies();
   return (
-    <div>
+    <div >
       <Header />
       <MainContainer />
       <SecondaryContainer />
