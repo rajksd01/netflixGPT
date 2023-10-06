@@ -9,6 +9,7 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_URL } from "../utils/Constants";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -97,10 +98,7 @@ const Login = () => {
       <Header />
       <div className="absolute w-full h-full  ">
         {" "}
-        <img
-          className="w-full h-full"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/dc1cf82d-97c9-409f-b7c8-6ac1718946d6/14a8fe85-b6f4-4c06-8eaf-eccf3276d557/IN-en-20230911-popsignuptwoweeks-perspective_alpha_website_small.jpg"
-        />
+        <img className="w-full h-full" src={BG_URL } />
       </div>
       <form className=" text-white  w-4/12 absolute bg-black my-28 p-16 pt-8 mx-auto left-0 right-0 bg-opacity-80">
         <h1 className="text-3xl m-1 my-4 font-bold">
