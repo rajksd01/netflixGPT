@@ -13,6 +13,7 @@ function Browse() {
   usePopularMovies();
   useTrendingMovies();
   useUpcomingMovies();
+
   const showSearch = useSelector((store) => store.gpt.showGPTSearch);
   return (
     <div>

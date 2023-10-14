@@ -11,6 +11,7 @@ import { SUPPORTED_LANGUAGES } from "../utils/Constants";
 import { changeLanguage } from "../utils/configSlice";
 
 function Header() {
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
@@ -86,7 +87,7 @@ function Header() {
             className="bg-orange-500 font-bold text-xl px-6 py-2 rounded-xl  mx-4 "
             onClick={handleSearchClicked}
           >
-            {showSearch ? "HomePage" : "SearchGPT"} 
+            {showSearch ? "HomePage" : "GPT Search"} 
           </button>
           <img
             className="h-12 w-12 px-1 "
